@@ -40,14 +40,14 @@ export const ItemText = styled.Text`
 `;
 const deviceWidth = Dimensions.get('window').width;
 export default class ScrollPicker extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.onMomentumScrollBegin = this.onMomentumScrollBegin.bind(this);
     this.onMomentumScrollEnd = this.onMomentumScrollEnd.bind(this);
     this.onScrollBeginDrag = this.onScrollBeginDrag.bind(this);
     this.onScrollEndDrag = this.onScrollEndDrag.bind(this);
     this.state = {
-      selectedIndex: 1,
+      selectedIndex: props.selectedIndex,
     }
   }
 
@@ -103,7 +103,7 @@ export default class ScrollPicker extends React.Component {
 
   renderItem(data, index) {
     const isSelected = index === this.state.selectedIndex;
-    const item = <ItemText color={isSelected ? this.props.activeItemColor : this.props.itemColor}>{data}</ItemText>;
+    const item = this.props.itemComponent ? this.props.itemComponent : <ItemText color={isSelected ? this.props.activeItemColor : this.props.itemColor}>{data}</ItemText>;
 
     return (
       <SelectedItem key={index} itemHeight={this.props.itemHeight}>
@@ -208,6 +208,7 @@ ScrollPicker.propTypes = {
   highlightBorderWidth: PropTypes.number,
   activeItemColor: PropTypes.string,
   itemColor: PropTypes.string,
+  itemComponent: PropTypes.any,
   onMomentumScrollEnd: PropTypes.func,
   onScrollEndDrag: PropTypes.func,
 };
