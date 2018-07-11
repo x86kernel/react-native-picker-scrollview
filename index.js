@@ -103,11 +103,17 @@ export default class ScrollPicker extends React.Component {
 
   renderItem(data, index) {
     const isSelected = index === this.state.selectedIndex;
-    const item = this.props.itemComponent ? this.props.itemComponent : <ItemText color={isSelected ? this.props.activeItemColor : this.props.itemColor}>{data}</ItemText>;
+    const Item = this.props.itemComponent 
 
     return (
       <SelectedItem key={index} itemHeight={this.props.itemHeight}>
-        {item}
+        {
+          Item ? (
+            <Item data={ data } />
+          ) : (
+            <ItemText color={isSelected ? this.props.activeItemColor : this.props.itemColor}>{data}</ItemText>
+          )
+        }
       </SelectedItem>
     );
   }
